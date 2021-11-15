@@ -3,7 +3,7 @@ import "./register.css"
 import axios from "axios"
 import { useHistory } from "react-router-dom"
 
-import { FaUserAlt, FaKey, FaFacebookF, FaTwitter, FaLinkedinIn, FaGoogle } from "react-icons/fa";
+import { FaUserAlt, FaKey, FaFacebookF, FaTwitter, FaLinkedinIn, FaGoogle, FaRegEnvelope } from "react-icons/fa";
 //import blue from './blue.png'
 import logo from './picogramlogo.png'
 import bg from './bg2.png'
@@ -63,24 +63,31 @@ const Register = () => {
     <img src={bg} class="bg" />
 
     <div class="form-container">
-        <div className="login">
+        <div className="register">
             <img src={vector} class="vector" />
             {console.log("User", user)}
-            <form action="" class="sign-in-form">
+            <form action="" class="register-form">
                 <img src={logo} class="logo" />
-                <h2 class="title">Sign In</h2>
+                <h2 class="title">Sign Up</h2>
+
                 <div class="input-field" >
                     <FaUserAlt > </FaUserAlt>
+                    <input type="text" name="name" value={user.name} placeholder="Name" onChange={handleChange}></input>
+                </div>
+
+                <div class="input-field" >
+                    <FaRegEnvelope > </FaRegEnvelope>
                     <input type="text" name="email" value={user.email} onChange={handleChange} placeholder="Email"></input>
                 </div>
+
                 <div class="input-field">
                     <FaKey ></FaKey>
                     <input type="password" name="password" value={user.password} onChange={handleChange} placeholder="Password"></input>
                 </div>
                 
-                <input type="submit" value="Login" class="btn solid" onClick={login} />
+                <input type="submit" value="Sign up" class="btn solid" onClick={register} />
 
-                <p class="social-text"> Or sign in with social platforms</p>
+                <p class="social-text"> Or Resigter with social platforms</p>
                 <div class="social-media">
                     <a href="#" class="social-icon">
                         <FaFacebookF></FaFacebookF>
@@ -94,9 +101,10 @@ const Register = () => {
                     <a href="#" class="social-icon">
                         <FaTwitter></FaTwitter>
                     </a>
+                    
                 </div>
 
-                <input type="submit" value="Don't have an account? Sign Up?" class="signup" onClick={() => history.push("/register")} />
+                <input type="submit" value="Already have an account? Sign In" class="login" onClick={() => history.push("/login")} />
 
             </form>
 

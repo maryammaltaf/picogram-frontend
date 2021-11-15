@@ -54,7 +54,7 @@ body, input{
     
 }
 
-.login{
+.register{
     position: absolute;
     top: 50%;
     left: 50%;
@@ -66,7 +66,7 @@ body, input{
 .form-container{
     position: absolute;
     width: 80%;
-    height: 85%;
+    height: 90%;
     top: 50%;
     left: 50%;
     transform: translate(-50%,-50%);
@@ -85,7 +85,7 @@ form{
     flex-direction: column;
     background-color: #fff;
     border-radius: 60px;
-    height: 500px;
+    height: 550px;
     margin: 0px;
     box-shadow: #acacac;
     width: 80%;
@@ -201,7 +201,7 @@ form{
     align-items: center;
 }
 
-.signup{
+.login{
     padding: 1rem 0;
     font-size: 1rem;
     color: #000;
@@ -212,7 +212,7 @@ form{
     cursor: pointer;    
 }
 
-.signup:hover{
+.login:hover{
     color: rgb(125, 51, 194);
     
 }
