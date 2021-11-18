@@ -1,0 +1,258 @@
+
+body,input{
+    font-family: 'Poppins', 'sans-serif';
+}
+
+.part1{
+    position: absolute;
+    height: 100%;
+    width: 22%;
+    top: 0%;
+    left: 0%;
+    border-right: 2px solid black;
+    
+    
+    
+}
+
+.part2{  
+    position: absolute;
+    height: 100%;
+    width: 53%;
+    top: 0%;
+    left: 22%;
+    border-right: 2px solid black;  
+    overflow-y: auto;
+    scroll-behavior: smooth;     
+}
+
+::-webkit-scrollbar{
+    display: none;
+}
+
+
+.part3{
+    position: absolute;
+    height: 100%;
+    width: 22%;
+    top: 0;
+    left: 78% ;
+}
+
+ .icons{
+   height: 45%;
+   width: 85%;
+   margin-top: 5%;
+   display: flex;
+   flex-direction: column;
+   justify-content: space-around;
+   margin-left: 5%;   
+}
+
+.iconText{
+    display: flex;
+    flex-direction: row;
+    width: auto;
+    align-items: center;
+    border: none;
+    outline: none;   
+    background-color: #fff;
+    cursor: pointer;
+    border-radius: 50px;
+    height: 60px;
+    padding: 25px;    
+}
+
+.iconText:hover{
+    background-color: #e4e4e4;
+}
+
+.text{
+    font-family: 'Poppins','sans-serif';
+    font-weight: 600;
+    margin-left: 10%;
+    text-align: left;
+    font-size: 1.5rem;    
+}
+
+.logo{
+    height: 130px;
+    margin-left: 25px;
+    margin-top: 5%;
+
+}
+
+.userProfile{
+    margin-top: 20%;
+    margin-left: 12%;
+    display: flex;
+    flex-direction: row;
+    cursor: pointer;
+    background-color: #fff;
+    border: none;
+    outline: none;
+    align-items: center;
+}
+
+.userInfo{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    
+}
+
+.userProfileText{
+    font-family: 'Poppins','sans-serif';
+    font-size: medium;
+    font-weight: normal;
+    margin-left: 15px;
+
+
+}
+
+.profilepic{
+    height: 80px;
+    width: 80px;
+    border-radius: 50%;
+    border: 1px solid lightgrey;
+    
+}
+
+.logout{
+    width: 300px;
+    height: 49px;
+    border: 2px solid;
+    border-color: #000; 
+    border-radius: 49px;
+    cursor: pointer;
+    color: #000;
+    text-transform: uppercase;
+    font-weight: 600;
+    margin-left: 12%;
+    margin-top: 25px;
+    transition: .5s;
+    background-color: #fff;   
+}
+
+.search{
+    margin-top: 50px;
+    margin-left: 6px;
+    width: 320px;
+    padding: 10px;
+    padding-left: 10px;
+    border: 2px solid black;
+    border-radius: 30px;
+}
+
+.suggested{
+    margin-left: 6px;
+    margin-top: 35px;
+    width: 320px;
+    height: 450px;
+    border: 2px solid black;
+    border-radius: 30px;
+    display: flex;
+    flex-direction: column;
+    
+    
+    
+}
+
+
+
+.profileHeader{
+    margin-top: 50px;
+    margin-left: 60px;
+    display: flex;
+    flex-direction: column;
+}
+
+.nameBio{
+    display: flex;
+    flex-direction: column;
+    margin-top: 27px;
+    margin-left: 10px;
+}
+
+.pictureProfile{
+    display: flex;
+    flex-direction: row;
+}
+
+.usernamePostnumbers{
+    display: flex;
+    flex-direction: column;
+    margin-left: 10px;
+    margin-right: 60px;
+}
+
+.postsFollowers{
+    display: flex;
+    flex-direction: row;
+    margin-top: 20px;
+    justify-content: space-around;
+    
+    
+}
+
+.pText{
+    font-size: 1rem;
+    text-align: left;
+    margin-left: 20px;
+
+}
+
+.editSettings{
+    display: flex;
+    flex-direction: row;
+    margin-top: 10px;
+    justify-content: space-around;
+}
+
+.allPosts{
+    margin-top: 40px;
+    margin-left: 60px;
+    margin-right: 60px;
+    height: 600px;
+    background-color: lightgray;
+}
+
+.text2{
+    font-weight: 500;
+    text-align: left;
+    font-size: 1.2rem; 
+}
+
+
+.profilepic2{
+    height: 70px;
+    width: 70px;
+    border-radius: 50%;
+    border: 1px solid lightgrey;
+    
+}
+
+.userProfileText2{
+    font-size: 0.9rem;
+    font-weight: normal;
+    margin-left: 15px;
+
+
+}
+
+.sugText{
+    font-weight: 600;
+    margin-left: 18%;
+    text-align: left;
+    font-size: 1.4rem;
+    margin-top: 23px;
+    
+}
+
+
+
+
+
+
+
+

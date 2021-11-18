@@ -4,6 +4,7 @@ import Login from './components/login/login';
 import Register from './components/register/register';
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import { useState } from 'react';
+import Profile from './components/profile/profile';
 
 function App() {
 
@@ -13,7 +14,7 @@ function App() {
     <div className="App">
       <Router>
         <Switch>
-          <Route exact path="/">
+          {/* <Route exact path="/">
             {
               user && user.token
                 ?
@@ -21,7 +22,10 @@ function App() {
                 :
                 <Login setLoginUser={setLoginUser} />
             }
-          </Route>
+          </Route> */}
+          <Route path="/getProfile">
+            <Profile/>
+            </Route>
           <Route path="/login">
             <Login setLoginUser={setLoginUser} />
           </Route>
