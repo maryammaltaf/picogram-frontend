@@ -15,7 +15,7 @@ function App() {
         <Switch>
           <Route exact path="/">
             {
-              user && user._id
+              user && user.token
                 ?
                 <Homepage setLoginUser={setLoginUser} />
                 :
