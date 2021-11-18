@@ -27,7 +27,8 @@ const Login = ({ setLoginUser }) => {
         })
     }
 
-    const login = () => {
+    const login = (e) => {
+        e.preventDefault();
         console.log("in login")
         const {username, password} = user;
         console.log(username, password)
@@ -38,16 +39,16 @@ const Login = ({ setLoginUser }) => {
                 localStorage.setItem("token", token);
                 console.log(res.data.accessToken)
                 console.log(res.data.user)
-                setLoginUser(res.data.user)
+                
                 axios.get(`http://localhost:9000/profile`, user)
                 .then(res => {
+                    setLoginUser(res.data.userMyInfo)
                     console.log(res.data)
-
                 })
                 .catch(err => {
                     console.log("BACKEND ERR:", err.response)
                 })
-                // history.push("/")
+                history.push("/")
             })
             .catch(err => {
                 console.log("BACKEND ERR:", err.response)
@@ -85,8 +86,8 @@ const Login = ({ setLoginUser }) => {
                             <input type="password" name="password" value={user.password} onChange={handleChange} placeholder="Password"></input>
                         </div>
                         
-                        {/* <input className="button"type="submit" value="Login" class="btn solid" onSubmit={login} onClick={login} /> */}
-                        <div className="button" class="btn solid" onClick={login}>LOGIN</div>
+                        <input className="button"type="submit" value="Login" class="btn solid"/>
+                        {/* <div className="button" class="btn solid" onClick={login}>LOGIN</div> */}
 
                         <p class="social-text"> Or sign in with social platforms</p>
                         <div class="social-media">

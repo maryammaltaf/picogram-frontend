@@ -14,10 +14,9 @@ const Register = () => {
     const history = useHistory()
 
     const [user, setUser] = useState({
-        name: "",
+        username: "",
         email: "",
         password: "",
-        reEnterPassword: "",
     })
 
     const handleChange = e => {
@@ -29,35 +28,25 @@ const Register = () => {
         })
     }
 
-    const register = () => {
-        const { name, email, password, reEnterPassword } = user
-        if (name && email && password && (password === reEnterPassword)) {
-            //alert("posted")
-            axios.post("http://localhost:9002/register", user)
+    const register = (e) => {
+        e.preventDefault();
+        const { username, email, password, privacy } = user
+        if (username && email && password && privacy) {
+            axios.post("http://localhost:9000/register", user)
             .then (res =>{
-                alert(res.data.message)
-                history.push("/login")
-
-            } )
-        }
-        else{
+                console.log(res.data);
+            })
+            .catch(err => {
+                console.log("err: ", err.response)
+            })
+        } 
+        else {
             alert("invalid input")
         }
     }
 
      return (
-    //     <div className="register">
-    //         {console.log("User", user)}
-    //         <h1>Register</h1>
-    //         <input type="text" name="name" value={user.name} placeholder="Your Name" onChange={handleChange}></input>
-    //         <input type="text" name="email" value={user.email} placeholder="Your Email" onChange={handleChange}></input>
-    //         <input type="password" name="password" value={user.password} placeholder="Your Password" onChange={handleChange}></input>
-    //         <input type="password" name="reEnterPassword" value={user.reEnterPassword} placeholder="Re-enter Password" onChange={handleChange}></input>
-    //         <div className="button" onClick={register} >Register</div>
-    //         <div>or</div>
-    //         <div className="button"onClick={() => history.push("/login")}>Login</div>
-    //     </div>
-    // )
+
 
     <div class="container">
     <img src={bg} class="bg" />
@@ -72,7 +61,7 @@ const Register = () => {
 
                 <div class="input-field" >
                     <FaUserAlt > </FaUserAlt>
-                    <input type="text" name="name" value={user.name} placeholder="Name" onChange={handleChange}></input>
+                    <input type="text" name="username" value={user.username} placeholder="Username" onChange={handleChange}></input>
                 </div>
 
                 <div class="input-field" >
@@ -83,6 +72,11 @@ const Register = () => {
                 <div class="input-field">
                     <FaKey ></FaKey>
                     <input type="password" name="password" value={user.password} onChange={handleChange} placeholder="Password"></input>
+                </div>
+
+                <div class="input-field" >
+                    <FaUserAlt > </FaUserAlt>
+                    <input type="text" name="privacy" value={user.privacy} placeholder="true/false" onChange={handleChange}></input>
                 </div>
                 
                 <input type="submit" value="Sign up" class="btn solid" onClick={register} />

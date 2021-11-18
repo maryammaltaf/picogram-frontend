@@ -6,13 +6,59 @@ import { IoHomeOutline, IoCompassOutline, IoChatbubbleEllipsesOutline, IoHeartOu
 import logo from './picogramlogo.png'
 import photo from './profilepic.jpeg'
 
+const url = 'http://localhost:9000';
+const Profile = ( {setLoginUser, user}) => {
 
-const Profile = () => {
+    const history = useHistory()
 
+    const [clickedUser, setClickUser] = useState({
+    })
+    
+    console.log("USERRR", user)
+    if (Object.entries(user).length !== 0) {
+        console.log("User hai", user)
+        localStorage.setItem("user", JSON.stringify(user))
+        console.log("pls ", localStorage.getItem("user"))
+    }
+
+    console.log("pls bahar", localStorage.getItem("user"))
+
+    const clickUser = (e) => {
+        // console.log(e.target.innerHTML);
+        const tempClickedUser = e.target.innerHTML;
+        axios.defaults.headers.common["x-access-token"] = localStorage.getItem("token");
+        axios.get(`${url}/profile/${tempClickedUser}`)
+        .then(res => {
+            // I FOLLOW THE OTHER PERSON
+            if(res.data.userPrivate) {
+                setClickUser(res.data.userPrivate)
+            }
+            // I DONT FOLLOW
+            else if (res.data.userPublic) {
+                setClickUser(res.data.userPublic)
+            }
+            // I AM ME
+            else if(res.data.userMyInfo) {
+                setClickUser(res.data.userMyInfo)
+            }
+        })
+        .catch(err => {
+            console.log("err: ", err.response)
+        })
+    }
+
+    const logout = (e) => {
+        e.preventDefault()
+        localStorage.removeItem("user")
+        localStorage.removeItem("token")
+        setLoginUser({})
+        history.push("/")
+    }
 
 return(
 <body>
 <div className = "profile"> 
+
     <div className = "part1">
         <img src={logo} class="logo" />
         <div className = "icons">
@@ -42,18 +88,18 @@ return(
         <button className = "userProfile">
             <img src = {photo} class = "profilepic"/>
             <div className = "userInfo">
-                <p className = "userProfileText" style = {{fontWeight : "bold"}}>Full Name</p>
-                <p className = "userProfileText" style = {{fontStyle : "italic"}}>@username</p>
+                <p className = "userProfileText" style = {{fontWeight : "bold"}}>{JSON.parse(localStorage.getItem("user")).email}</p>
+                <p className = "userProfileText" style = {{fontStyle : "italic"}}>{JSON.parse(localStorage.getItem("user")).username}</p>
             </div>
         </button>
-        <input type="submit" value = "Logout" class="logout"  />
+        <input type="submit" value = "Logout" class="logout" onClick={logout}  />
     </div>
     <div className = "part2">
         <div className = "profileHeader" >
             <div className = "pictureProfile">
                 <img src = {photo} class = "profilepic" style = {{height : "170px", width : "170px"}}/>
                 <div className = "usernamePostnumbers">
-                    <h1 className = "text" style = {{marginLeft:"15px"}}>@username</h1>
+                    <h1 className = "text" style = {{marginLeft:"15px"}}>{clickedUser.username ? clickedUser.username : JSON.parse(localStorage.getItem("user")).username}</h1>
                     <div className = "postsFollowers">
                         <p className = "pText">-- posts</p>
                         <p className = "pText">-- followers</p>
@@ -83,11 +129,11 @@ return(
         <div className = "suggested">
            
                 <h1 className = "sugText">Suggested for you</h1>
-                <button className = "userProfile" style = {{marginTop: "20px", marginLeft: "17%"}}>
+                <button onClick={clickUser} className = "userProfile" style = {{marginTop: "20px", marginLeft: "17%"}}>
                     <img src = {photo} class = "profilepic2"/>
                     <div className = "userInfo">
                         <p className = "userProfileText2" style = {{fontWeight : "bold"}}>Full Name</p>
-                        <p className = "userProfileText2" style = {{fontStyle : "italic"}}>@username</p>
+                        <p className = "userProfileText2" style = {{fontStyle : "italic"}}>ammar3</p>
                     </div>
                 </button>
                 <button className = "userProfile" style = {{marginTop: "20px", marginLeft: "17%"}}>

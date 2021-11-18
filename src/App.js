@@ -14,15 +14,15 @@ function App() {
     <div className="App">
       <Router>
         <Switch>
-          {/* <Route exact path="/">
+          <Route exact path="/">
             {
-              user && user.token
+              localStorage.getItem('token')
                 ?
-                <Homepage setLoginUser={setLoginUser} />
+                <Profile setLoginUser={setLoginUser} user={user}/>
                 :
                 <Login setLoginUser={setLoginUser} />
             }
-          </Route> */}
+          </Route>
           <Route path="/getProfile">
             <Profile/>
             </Route>
