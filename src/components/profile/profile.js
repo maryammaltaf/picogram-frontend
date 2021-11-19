@@ -104,7 +104,7 @@ return(
         <button onClick={clickUser} className = "userProfile">
             <img src = {photo} class = "profilepic"/>
             <div className = "userInfo">
-                <p className = "userProfileText" style = {{fontWeight : "bold"}}>{JSON.parse(localStorage.getItem("user")).email}</p>
+                <p className = "userProfileText" style = {{fontWeight : "bold"}}>{JSON.parse(localStorage.getItem("user")).fullname}</p>
                 <p className = "userProfileText usernameText" style = {{fontStyle : "italic"}}>{JSON.parse(localStorage.getItem("user")).username}</p>
             </div>
         </button>
@@ -151,14 +151,14 @@ return(
                     <img src = {photo} class = "profilepic2"/>
                     <div className = "userInfo">
                         <p className = "userProfileText2" style = {{fontWeight : "bold"}}>Full Name</p>
-                        <p className = "userProfileText2 usernameText" style = {{fontStyle : "italic"}}>ammar3</p>
+                        <p className = "userProfileText2 usernameText" style = {{fontStyle : "italic"}}>huda</p>
                     </div>
                 </button>
                 <button onClick={clickUser} className = "userProfile" style = {{marginTop: "20px", marginLeft: "17%"}}>
                     <img src = {photo} class = "profilepic2"/>
                     <div className = "userInfo">
                         <p className = "userProfileText2" style = {{fontWeight : "bold"}}>Full Name</p>
-                        <p className = "userProfileText2 usernameText" style = {{fontStyle : "italic"}}>ammar1</p>
+                        <p className = "userProfileText2 usernameText" style = {{fontStyle : "italic"}}>maryam</p>
                     </div>
                 </button>
                 <button onClick={clickUser} className = "userProfile" style = {{marginTop: "20px", marginLeft: "17%"}}>
@@ -172,7 +172,7 @@ return(
                     <img src = {photo} class = "profilepic2"/>
                     <div className = "userInfo">
                         <p className = "userProfileText2" style = {{fontWeight : "bold"}}>Full Name</p>
-                        <p className = "userProfileText2 usernameText" style = {{fontStyle : "italic"}}>ammar</p>
+                        <p className = "userProfileText2 usernameText" style = {{fontStyle : "italic"}}>ammar3</p>
                     </div>
                 </button>
                
