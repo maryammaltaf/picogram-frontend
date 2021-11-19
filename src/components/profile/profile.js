@@ -74,7 +74,8 @@ const Profile = ( {setLoginUser, user}) => {
 return(
 <body>
 <div className = "profile"> 
-
+    
+    {console.log(1)}
     <div className = "part1">
         <img src={logo} class="logo" />
         <div className = "icons">

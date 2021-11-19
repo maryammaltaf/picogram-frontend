@@ -9,7 +9,7 @@ import logo from './picogramlogo.png'
 import bg from './bg2.png'
 import vector from './vector.png'
 
-const Register = () => {
+const Register = ( {setLoginUser} ) => {
 
     const history = useHistory()
 
@@ -29,20 +29,54 @@ const Register = () => {
     }
 
     const register = (e) => {
+        // e.preventDefault();
+        // const { username, email, password, privacy } = user
+        // if (username && email && password && privacy) {
+        //     axios.post("http://localhost:9000/register", user)
+        //     .then (res =>{
+        //         console.log(res.data);
+        //     })
+        //     .catch(err => {
+        //         console.log("err: ", err.response)
+        //     })
+        // } 
+        // else {
+        //     alert("invalid input")
+        // }
+
         e.preventDefault();
-        const { username, email, password, privacy } = user
-        if (username && email && password && privacy) {
-            axios.post("http://localhost:9000/register", user)
-            .then (res =>{
-                console.log(res.data);
-            })
-            .catch(err => {
-                console.log("err: ", err.response)
-            })
-        } 
-        else {
-            alert("invalid input")
-        }
+        localStorage.clear();
+        console.log("in register")
+        // const {username, password} = user;
+        // console.log(username, password)
+        const { fullname, username, email, password, privacy } = user
+        if (fullname && username && email && password && privacy) { 
+            axios.post('http://localhost:9000/register', user)
+                .then(res => {
+                    const token = res.data.accessToken
+                    axios.defaults.headers.common["x-access-token"] = token;
+                    localStorage.setItem("token", token);
+                    console.log(res.data.accessToken)
+                    console.log(res.data)
+                    
+                    axios.get(`http://localhost:9000/profile`, user)
+                    .then(res => {
+                        console.log("resData", res.data)
+                        console.log("userObj", res.data.userObj)
+                        
+                        history.push("/login")
+                    })
+                    .catch(err => {
+                        console.log("BACKEND ERR:", err.response)
+                    })
+                })
+                .catch(err => {
+                    console.log("BACKEND ERR:", err.response)
+                })
+            }
+            else {
+                alert("invalid input")
+            }
     }
 
      return (
@@ -58,6 +92,12 @@ const Register = () => {
             <form action="" class="register-form">
                 <img src={logo} class="logo" />
                 <h2 class="title">Sign Up</h2>
+
+
+                <div class="input-field" >
+                    <FaUserAlt > </FaUserAlt>
+                    <input type="text" name="fullname" value={user.fullname} placeholder="fullname" onChange={handleChange}></input>
+                </div>
 
                 <div class="input-field" >
                     <FaUserAlt > </FaUserAlt>
