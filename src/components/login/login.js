@@ -29,6 +29,7 @@ const Login = ({ setLoginUser }) => {
 
     const login = (e) => {
         e.preventDefault();
+        localStorage.clear();
         console.log("in login")
         const {username, password} = user;
         console.log(username, password)
@@ -38,17 +39,18 @@ const Login = ({ setLoginUser }) => {
                 axios.defaults.headers.common["x-access-token"] = token;
                 localStorage.setItem("token", token);
                 console.log(res.data.accessToken)
-                console.log(res.data.user)
+                console.log(res.data)
                 
                 axios.get(`http://localhost:9000/profile`, user)
                 .then(res => {
-                    setLoginUser(res.data.userMyInfo)
-                    console.log(res.data)
+                    console.log("resData", res.data)
+                    console.log("userObj", res.data.userObj)
+                    setLoginUser(res.data.userObj)
+                    history.push("/")
                 })
                 .catch(err => {
                     console.log("BACKEND ERR:", err.response)
                 })
-                history.push("/")
             })
             .catch(err => {
                 console.log("BACKEND ERR:", err.response)
