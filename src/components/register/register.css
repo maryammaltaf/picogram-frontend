@@ -85,7 +85,7 @@ form{
     flex-direction: column;
     background-color: #fff;
     border-radius: 60px;
-    height: 550px;
+    height: 600px;
     margin: 0px;
     box-shadow: #acacac;
     width: 80%;
@@ -179,10 +179,6 @@ form{
     color: rgb(125, 51, 194);
     border-color: rgb(125, 51, 194);
     cursor: pointer;
-}
-
-.logo{
-    height: 100px;
 }
 
 .bg{

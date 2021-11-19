@@ -1,5 +1,5 @@
 import React, { useState } from "react"
-import "./login.css"
+import "../register/register.css"
 import axios from "axios"
 import { useHistory } from "react-router-dom"
 
@@ -73,7 +73,7 @@ const Login = ({ setLoginUser }) => {
             <img src={bg} class="bg" />
 
             <div class="form-container">
-                <div className="login">
+                <div className="register">
                     <img src={vector} class="vector" />
                     {console.log("User", user)}
                     <form onSubmit={login} class="sign-in-form">
@@ -93,21 +93,21 @@ const Login = ({ setLoginUser }) => {
 
                         <p class="social-text"> Or sign in with social platforms</p>
                         <div class="social-media">
-                            <a href="#" class="social-icon">
+                            <a href="https://ask.fm/AmmarLakho987" class="social-icon">
                                 <FaFacebookF></FaFacebookF>
                             </a>
-                            <a href="#" class="social-icon">
+                            <a href="https://ask.fm/AmmarLakho987" class="social-icon">
                                 <FaGoogle></FaGoogle>
                             </a>
-                            <a href="#" class="social-icon">
+                            <a href="https://ask.fm/AmmarLakho987" class="social-icon">
                                 <FaLinkedinIn></FaLinkedinIn>
                             </a>
-                            <a href="#" class="social-icon">
+                            <a href="https://ask.fm/AmmarLakho987" class="social-icon">
                                 <FaTwitter></FaTwitter>
                             </a>
                         </div>
 
-                        <input type="submit" value="Don't have an account? Sign Up?" class="signup" onClick={() => history.push("/register")} />
+                        <input type="submit" value="Don't have an account? Sign Up?" class="login" onClick={() => history.push("/register")} />
                     </form>
 
                 </div>

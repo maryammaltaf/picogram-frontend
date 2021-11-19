@@ -121,7 +121,7 @@ const Register = ( {setLoginUser} ) => {
                 
                 <input type="submit" value="Sign up" class="btn solid" onClick={register} />
 
-                <p class="social-text"> Or Resigter with social platforms</p>
+                {/* <p class="social-text"> Or Resigter with social platforms</p>
                 <div class="social-media">
                     <a href="#" class="social-icon">
                         <FaFacebookF></FaFacebookF>
@@ -136,7 +136,7 @@ const Register = ( {setLoginUser} ) => {
                         <FaTwitter></FaTwitter>
                     </a>
                     
-                </div>
+                </div> */}
 
                 <input type="submit" value="Already have an account? Sign In" class="login" onClick={() => history.push("/login")} />
 
