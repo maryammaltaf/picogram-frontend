@@ -5,12 +5,27 @@ import Register from './components/register/register';
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import { useState } from 'react';
 import Profile from './components/profile/profile';
+import {useSelector} from 'react-redux';
 
 function App() {
+  
 
   const [user, setLoginUser] = useState({})
 
   return (
+  //   <div className="wrapper">
+  //   <h1>button List</h1>
+  //   <ul>
+  //     {buttons.map(button => (
+  //       <li key={button.name}>
+  //         <h3>{button.name}</h3>
+  //         <div>
+  //           class: {button.class}
+  //         </div>
+  //       </li>
+  //     ))}
+  //   </ul>
+  // </div>
     <div className="App">
       <Router>
         <Switch>

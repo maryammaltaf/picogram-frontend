@@ -5,20 +5,29 @@ import { useHistory } from "react-router-dom"
 import { IoHomeOutline, IoCompassOutline, IoChatbubbleEllipsesOutline, IoHeartOutline, IoSettingsOutline } from "react-icons/all";
 import logo from './picogramlogo.png'
 import photo from './profilepic.jpeg'
+import { useDispatch } from "react-redux";
+import { useSelector } from "react-redux";
+import {followPerson, followingPerson, requestPerson, editProfile} from '../../store/buttons/buttons'
+import { Router, Route } from "react-router";
+
 
 const url = 'http://localhost:9000';
 const Profile = ( {setLoginUser, user}) => {
+    const button = useSelector(state => state.button)
+
+    const dispatch = useDispatch();
 
     const history = useHistory()
 
     let [clickedUser, setClickUser] = useState({
     })
     
+    let [setting, setSetting] = useState('Settings')
+
     // setClickUser(user)
 
     console.log("USER: ", user)
-    console.log("ClickedUser: ", clickedUser);
-
+    
     console.log("length", Object.entries(user).length)
     if (Object.entries(user).length !== 0) {
         console.log("User hai", user)
@@ -28,19 +37,39 @@ const Profile = ( {setLoginUser, user}) => {
     }
 
     const clickUser = (e) => {
+
+        
         // console.log(e.target.innerHTML);
         const tempClickedUser = getUsernameText(e);
         axios.defaults.headers.common["x-access-token"] = localStorage.getItem("token");
         axios.get(`${url}/profile/${tempClickedUser}`)
         .then(res => {
             // I FOLLOW THE OTHER PERSON
-            setClickUser(res.data.userObj)
-            console.log("ClickedUser: ", res.data.userObj)
-            console.log("ClickedUser: ", clickedUser);
+           setClickUser(res.data.userObj)
+            console.log("click1: ", res.data.userObj)
+            console.log("click2: ", clickedUser);
+            if (res.data.userObj.followStatus == -1)
+            {
+                dispatch(followPerson('Follow'));
+                setSetting('Message')
+            }
+            if (res.data.userObj.followStatus == 1)
+            {
+                dispatch(followingPerson('Following'));
+                setSetting('Message')
+            }
+            if (res.data.userObj.followStatus == 0)
+            {
+                dispatch(editProfile('Edit Profile'));
+                setSetting('Settings')
+            }
+           
+
         })
         .catch(err => {
             console.log("err: ", err.response)
         })
+        
     }
 
     const logout = (e) => {
@@ -125,9 +154,9 @@ return(
                         <p className = "pText"> {clickedUser.followStatus === -1 ? clickedUser.followingCount: clickedUser.following.length} following</p>
                     </div>
                     <div className = "editSettings">
-                        <input type = "submit" value = "Edit Profile" className ="logout" 
+                        <input type = "submit" value = {button.name} className = "logout"
             style = {{backgroundColor:"rgb(125, 51, 194)", border:"2px solid rgb(125, 51, 194) ", color: "#fff", marginLeft: "17px", width: "285px" }}/>
-                        <input type = "submit" value = "Settings" className ="logout" 
+                        <input type = "submit" value = {setting} className ="logout" 
             style = {{backgroundColor:"rgb(125, 51, 194)", border:"2px solid rgb(125, 51, 194) ", color: "#fff", marginLeft: "17px", width:"285px" }}/>
                     </div>
                 </div>
