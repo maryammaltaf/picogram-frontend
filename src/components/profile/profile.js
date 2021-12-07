@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react"
+import React, { useState, useCallback } from "react"
 import "./profile.css"
 import axios from "axios"
 import { useHistory } from "react-router-dom"
@@ -18,9 +18,9 @@ const Profile = ({ setLoginUser, user }) => {
 
     const dispatch = useDispatch();
 
-    const history = useHistory()
+    const history = useHistory();
 
-    const [modalIsOpen, setModalIsOpen] = useState(false)
+    const [modalIsOpen, setModalIsOpen] = useState(false);
 
     let [clickedUser, setClickUser] = useState({
     })
@@ -100,15 +100,7 @@ const Profile = ({ setLoginUser, user }) => {
         clickedUser = JSON.parse(localStorage.getItem("user"))
     }
 
-    function openModal() {
-        setModalIsOpen(true);
-    }
-
-
-    function closeModal() {
-        setModalIsOpen(false);
-    }
-
+   
 
 
     return (
@@ -165,22 +157,23 @@ const Profile = ({ setLoginUser, user }) => {
                                     <p className="pText"> {clickedUser.followStatus === -1 ? clickedUser.followingCount : clickedUser.following.length} following</p>
                                 </div>
                                 
-                                {console.log(modalIsOpen)}
+                                {console.log("firsy stop", modalIsOpen)}
                                 <div className="editSettings">
                                     {/* <input type="submit" value={button.name} className="logout"
                                         style={{ backgroundColor: "rgb(125, 51, 194)", border: "2px solid rgb(125, 51, 194) ", color: "#fff", marginLeft: "17px", width: "285px" }}>
                                     </input> */}
 
-                                    <button type="submit" className="logout" onClick={openModal}
+                                    <button type="submit" className="logout" onClick={() => setModalIsOpen(!modalIsOpen)}
                                         style={{ backgroundColor: "rgb(125, 51, 194)", border: "2px solid rgb(125, 51, 194) ", color: "#fff", marginLeft: "17px", width: "285px" }}>
                                         {button.name}
                                         <Modal isOpen={modalIsOpen}>
+                                        {console.log("sec stop", modalIsOpen)}
 
                                             <h2>are you sure you want to unfollow this person?</h2>
 
-                                            <button onClick={closeModal}>close</button>
+                                            <button onClick={ () => setModalIsOpen(modalIsOpen)}>close</button>
 
-                                            {console.log(modalIsOpen)}
+                                            {console.log("third stop", modalIsOpen)}
 
                                         </Modal>
 
@@ -250,5 +243,7 @@ const Profile = ({ setLoginUser, user }) => {
         </body>
     )
 }
+
+
 
 export default Profile
