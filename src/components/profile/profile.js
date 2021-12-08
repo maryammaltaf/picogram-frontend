@@ -13,6 +13,7 @@ import Modal from 'react-modal';
 
 
 const url = 'http://localhost:9000';
+
 const Profile = ({ setLoginUser, user }) => {
     const button = useSelector(state => state.button)
 
