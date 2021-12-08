@@ -25,9 +25,48 @@ const List = ({ setLoginUser, user }) => {
         const [toggleState, setToggleState] = useState(1);
 
         const toggleTab = (index) => {
+
+            axios.defaults.headers.common["x-access-token"] = localStorage.getItem("token");
+            if (index === 1) {
+                clearAndGetList('followers');
+            }
+            else if (index === 2) {
+                clearAndGetList('following');
+            }
+            else if (index === 3) {
+                clearAndGetList('requests');
+            }
             setToggleState(index);
         };
 
+
+        const clearAndGetList = (listName) => {
+            if (listName !== 'followers' && listName !== 'following' && listName !== 'requests') {
+                console.log("Invalid list name");
+                return;
+            }
+            let div = document.getElementById('div-' + listName);
+            while(div.firstChild) {
+                div.removeChild(div.firstChild);
+            }
+            axios.get('http://localhost:9000/' + listName)
+            .then(res => {
+                console.log(res.data);
+                    const list = document.createElement('ul');
+                    for (let person of res.data[listName]) {
+                        console.log('person', person);
+                        let item = document.createElement('li');
+                        item.innerHTML = person.user._id;
+                        list.appendChild(item);
+                    }
+                    div.appendChild(list);
+            })
+            .catch(err => {
+                console.log(err);
+            });
+
+
+        }
 
         let [clickedUser, setClickUser] = useState({
         })
@@ -58,15 +97,15 @@ const List = ({ setLoginUser, user }) => {
                     setClickUser(res.data.userObj)
                     console.log("click1: ", res.data.userObj)
                     console.log("click2: ", clickedUser);
-                    if (res.data.userObj.followStatus == -1) {
+                    if (res.data.userObj.followStatus === -1) {
                         dispatch(followPerson('Follow'));
                         setSetting('Message')
                     }
-                    if (res.data.userObj.followStatus == 1) {
+                    if (res.data.userObj.followStatus === 1) {
                         dispatch(followingPerson('Following'));
                         setSetting('Message')
                     }
-                    if (res.data.userObj.followStatus == 0) {
+                    if (res.data.userObj.followStatus === 0) {
                         dispatch(editProfile('Edit Profile'));
                         setSetting('Settings')
                     }
@@ -179,11 +218,7 @@ const List = ({ setLoginUser, user }) => {
                             >
                                 <h2>Followers</h2>
                                 <hr />
-                                <p>
-                                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Obcaecati
-                                    praesentium incidunt quia aspernatur quasi quidem facilis quo nihil
-                                    vel voluptatum?
-                                </p>
+                                <div id="div-followers"></div>
                             </div>
 
                             <div
@@ -191,10 +226,7 @@ const List = ({ setLoginUser, user }) => {
                             >
                                 <h2>Following</h2>
                                 <hr />
-                                <p>
-                                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Sapiente
-                                    voluptatum qui adipisci.
-                                </p>
+                                <div id="div-following"></div>
                             </div>
 
                             <div
@@ -202,14 +234,7 @@ const List = ({ setLoginUser, user }) => {
                             >
                                 <h2>Request</h2>
                                 <hr />
-                                <p>
-                                    Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eos sed
-                                    nostrum rerum laudantium totam unde adipisci incidunt modi alias!
-                                    Accusamus in quia odit aspernatur provident et ad vel distinctio
-                                    recusandae totam quidem repudiandae omnis veritatis nostrum
-                                    laboriosam architecto optio rem, dignissimos voluptatum beatae
-                                    aperiam voluptatem atque. Beatae rerum dolores sunt.
-                                </p>
+                                <div id="div-requests"></div>
                             </div>
                         </div>
                     </div>
