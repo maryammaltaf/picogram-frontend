@@ -14,19 +14,7 @@ function App() {
   const [user, setLoginUser] = useState({})
 
   return (
-    //   <div className="wrapper">
-    //   <h1>button List</h1>
-    //   <ul>
-    //     {buttons.map(button => (
-    //       <li key={button.name}>
-    //         <h3>{button.name}</h3>
-    //         <div>
-    //           class: {button.class}
-    //         </div>
-    //       </li>
-    //     ))}
-    //   </ul>
-    // </div>
+
     <div className="App">
       <Router>
         <Switch>
@@ -34,7 +22,7 @@ function App() {
             {
               localStorage.getItem('token')
                 ?
-                <List setLoginUser={setLoginUser} user={user} />
+                <Profile setLoginUser={setLoginUser} user={user} />
                 :
                 <Login setLoginUser={setLoginUser} />
             }

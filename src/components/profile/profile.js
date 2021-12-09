@@ -56,6 +56,10 @@ const Profile = ({ setLoginUser, user }) => {
                     dispatch(followPerson('Follow'));
                     setSetting('Message')
                 }
+                if (res.data.userObj.followStatus == -2) {
+                    dispatch(requestPerson('Request sent'));
+                    setSetting('Message')
+                }
                 if (res.data.userObj.followStatus == 1) {
                     dispatch(followingPerson('Following'));
                     setSetting('Message')
@@ -77,6 +81,7 @@ const Profile = ({ setLoginUser, user }) => {
         e.preventDefault()
         localStorage.clear();
         setLoginUser({})
+        dispatch(editProfile('Edit Profile'))
         history.push("/")
     }
 
@@ -99,6 +104,59 @@ const Profile = ({ setLoginUser, user }) => {
 
     if (Object.entries(clickedUser).length === 0) {
         clickedUser = JSON.parse(localStorage.getItem("user"))
+    }
+
+    const shouldOpenModal = () => {
+        if (button.name == "Following")
+        {
+        setModalIsOpen(!modalIsOpen)
+        }
+        if ((button.name == "Follow") && (clickedUser.privacy == true))
+        {
+            axios.defaults.headers.common["x-access-token"] = localStorage.getItem("token");
+            const username = clickedUser.username
+            console.log("agaye idhar", username)
+            axios.post(`${url}/send-request`, null, {params :{username}})
+            .then(res => {
+                console.log(res.data)
+            })
+            .catch(err => {
+                console.log("err: ", err.response)
+            })
+
+            dispatch(requestPerson('Request Sent'))
+
+        }
+        if ((button.name == "Follow") && (clickedUser.privacy == false))
+        {
+            axios.defaults.headers.common["x-access-token"] = localStorage.getItem("token");
+            const username = clickedUser.username
+            console.log("agaye idhar", username)
+            axios.post(`${url}/send-request`, null, {params :{username}})
+            .then(res => {
+                console.log(res.data)
+            })
+            .catch(err => {
+                console.log("err: ", err.response)
+            })
+
+            dispatch(followingPerson('Following'))
+        }
+    }
+
+    const unfollowChange = () => {
+        if (button.name == "Following"){
+            axios.defaults.headers.common["x-access-token"] = localStorage.getItem("token");
+            const username = clickedUser.username
+        axios.delete(`${url}/unfollow`, {params :{username}})
+            .then(res => {
+                console.log(res.data)
+            })
+            setModalIsOpen(modalIsOpen)
+            dispatch(followPerson('Follow'));
+            
+
+        }
     }
 
    
@@ -154,25 +212,28 @@ const Profile = ({ setLoginUser, user }) => {
                                     <p className="pText">-- posts</p>
                                     {/* <p className = "pText">-- followers</p> */}
                                     {console.log("ClickedUser: ", clickedUser)}
-                                    <p className="pText">{clickedUser.followStatus === -1 ? clickedUser.followersCount : clickedUser.followers.length} followers</p>
-                                    <p className="pText"> {clickedUser.followStatus === -1 ? clickedUser.followingCount : clickedUser.following.length} following</p>
+                                    <p className="pText">{ clickedUser.followersCount} followers</p>
+                                    <p className="pText"> {clickedUser.followingCount} following</p>
                                 </div>
                                 
-                                {console.log("firsy stop", modalIsOpen)}
+                                {console.log("first stop", modalIsOpen)}
                                 <div className="editSettings">
                                     {/* <input type="submit" value={button.name} className="logout"
                                         style={{ backgroundColor: "rgb(125, 51, 194)", border: "2px solid rgb(125, 51, 194) ", color: "#fff", marginLeft: "17px", width: "285px" }}>
                                     </input> */}
 
-                                    <button type="submit" className="logout" onClick={() => setModalIsOpen(!modalIsOpen)}
+                                    <button type="submit" className="logout" onClick={shouldOpenModal}
                                         style={{ backgroundColor: "rgb(125, 51, 194)", border: "2px solid rgb(125, 51, 194) ", color: "#fff", marginLeft: "17px", width: "285px" }}>
                                         {button.name}
                                         <Modal isOpen={modalIsOpen}>
                                         {console.log("sec stop", modalIsOpen)}
-
+                                            
                                             <h2>are you sure you want to unfollow this person?</h2>
 
-                                            <button onClick={ () => setModalIsOpen(modalIsOpen)}>close</button>
+                                            {/* <button onClick={ () => setModalIsOpen(modalIsOpen)}>no</button> */}
+
+                                            <button onClick = {unfollowChange} >yes</button>
+
 
                                             {console.log("third stop", modalIsOpen)}
 
