@@ -107,59 +107,56 @@ const Profile = ({ setLoginUser, user }) => {
     }
 
     const shouldOpenModal = () => {
-        if (button.name == "Following")
-        {
-        setModalIsOpen(!modalIsOpen)
+        if (button.name == "Following") {
+            setModalIsOpen(!modalIsOpen)
         }
-        if ((button.name == "Follow") && (clickedUser.privacy == true))
-        {
+        if ((button.name == "Follow") && (clickedUser.privacy == true)) {
             axios.defaults.headers.common["x-access-token"] = localStorage.getItem("token");
             const username = clickedUser.username
             console.log("agaye idhar", username)
-            axios.post(`${url}/send-request`, null, {params :{username}})
-            .then(res => {
-                console.log(res.data)
-            })
-            .catch(err => {
-                console.log("err: ", err.response)
-            })
+            axios.post(`${url}/send-request`, null, { params: { username } })
+                .then(res => {
+                    console.log(res.data)
+                })
+                .catch(err => {
+                    console.log("err: ", err.response)
+                })
 
             dispatch(requestPerson('Request Sent'))
 
         }
-        if ((button.name == "Follow") && (clickedUser.privacy == false))
-        {
+        if ((button.name == "Follow") && (clickedUser.privacy == false)) {
             axios.defaults.headers.common["x-access-token"] = localStorage.getItem("token");
             const username = clickedUser.username
             console.log("agaye idhar", username)
-            axios.post(`${url}/send-request`, null, {params :{username}})
-            .then(res => {
-                console.log(res.data)
-            })
-            .catch(err => {
-                console.log("err: ", err.response)
-            })
+            axios.post(`${url}/send-request`, null, { params: { username } })
+                .then(res => {
+                    console.log(res.data)
+                })
+                .catch(err => {
+                    console.log("err: ", err.response)
+                })
 
             dispatch(followingPerson('Following'))
         }
     }
 
     const unfollowChange = () => {
-        if (button.name == "Following"){
+        if (button.name == "Following") {
             axios.defaults.headers.common["x-access-token"] = localStorage.getItem("token");
             const username = clickedUser.username
-        axios.delete(`${url}/unfollow`, {params :{username}})
-            .then(res => {
-                console.log(res.data)
-            })
+            axios.delete(`${url}/unfollow`, { params: { username } })
+                .then(res => {
+                    console.log(res.data)
+                })
             setModalIsOpen(modalIsOpen)
             dispatch(followPerson('Follow'));
-            
+
 
         }
     }
 
-   
+
 
 
     return (
@@ -212,10 +209,10 @@ const Profile = ({ setLoginUser, user }) => {
                                     <p className="pText">-- posts</p>
                                     {/* <p className = "pText">-- followers</p> */}
                                     {console.log("ClickedUser: ", clickedUser)}
-                                    <p className="pText">{ clickedUser.followersCount} followers</p>
+                                    <p className="pText">{clickedUser.followersCount} followers</p>
                                     <p className="pText"> {clickedUser.followingCount} following</p>
                                 </div>
-                                
+
                                 {console.log("first stop", modalIsOpen)}
                                 <div className="editSettings">
                                     {/* <input type="submit" value={button.name} className="logout"
@@ -225,19 +222,16 @@ const Profile = ({ setLoginUser, user }) => {
                                     <button type="submit" className="logout" onClick={shouldOpenModal}
                                         style={{ backgroundColor: "rgb(125, 51, 194)", border: "2px solid rgb(125, 51, 194) ", color: "#fff", marginLeft: "17px", width: "285px" }}>
                                         {button.name}
-                                        <Modal isOpen={modalIsOpen}>
-                                        {console.log("sec stop", modalIsOpen)}
-                                            
-                                            <h2>are you sure you want to unfollow this person?</h2>
 
-                                            {/* <button onClick={ () => setModalIsOpen(modalIsOpen)}>no</button> */}
-
-                                            <button onClick = {unfollowChange} >yes</button>
-
-
-                                            {console.log("third stop", modalIsOpen)}
-
-                                        </Modal>
+                                            <Modal isOpen={modalIsOpen} className="modal">
+                                                {console.log("sec stop", modalIsOpen)}
+                                                <h2 className='modal-text'>Are you sure you want to unfollow this person?</h2>
+                                                {/* <button onClick={ () => setModalIsOpen(modalIsOpen)}>no</button> */}
+                                                <button className='modal-btn1' onClick={unfollowChange} >yes</button>
+                                                <button className='modal-btn2'> no </button>
+                                                {console.log("third stop", modalIsOpen)}
+                                            </Modal>
+                                        
 
 
                                     </button>

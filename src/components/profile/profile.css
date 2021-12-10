@@ -345,6 +345,64 @@ body,input{
 
 
 
+  .modal{
+    display: block;
+    background-color: #f0f0f0;
+    height: 30%;
+    width: 25%;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    top: 50%;
+    left: 50%;
+    transform: translate(150%,  100%);
+    border-radius: 50px;
+    box-shadow: 7px 7px 10px rgba(0, 0, 0, 0.315)
+  }
+
+  .modal-text{
+    color: rgb(0, 0, 0);
+    margin: 20px;
+    padding-top: 50px;
+  }
+
+  .modal-btn1{
+    padding: 10px;
+    margin-left: 10px;
+    margin-right: 10px;
+    font-size: 14px;
+    text-transform: uppercase;
+    /* background-color: rgb(180, 58, 204); */
+    background-color:rgb(125, 51, 194);
+    border-radius: 50px;
+    width: 30%;    
+    font-weight: 600;
+    color: #fff;
+    cursor: pointer;
+}
+
+.modal-btn1:hover{
+  background-color: rgb(180, 58, 204);
+}
+
+.modal-btn2{
+  padding: 10px;
+  margin-left: 10px;
+  margin-right: 10px;
+  font-size: 14px;
+  text-transform: uppercase;
+  background-color: rgb(0, 0, 0);
+  border-radius: 50px;
+  width: 30%;    
+  font-weight: 600;
+  color: #fff;
+  cursor: pointer;
+}
+.modal-btn2:hover{
+  background-color: rgb(44, 44, 44);
+}
+
+
 
 
 
