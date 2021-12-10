@@ -275,30 +275,40 @@ body,input{
   
   .bloc-tabs {
     display: flex;
+    
   }
   .tabs {
-  
+    transform: translate(0%,50%);
     top: 10%;
     padding: 15px;
     text-align: center;
     width: 50%;
-    background: rgba(128, 128, 128, 0.075);
+    background: rgb(255, 255, 255);
     cursor: pointer;
-    border-bottom: 1px solid rgba(0, 0, 0, 0.274);
     box-sizing: content-box;
     position: relative;
     outline: none;
+    text-transform: uppercase;
+    font-weight: 600;
   }
-  .tabs:not(:last-child){
+
+  .tabs:hover{
+    background-color: #f0f0f0;
+  }
+
+  /* .tabs:not(:last-child){
     border-right: 1px solid rgba(0, 0, 0, 0.274);
-  }
+  } */
   
   .active-tabs  {
     background: white;
-    border-bottom: 1px solid transparent;
+    color: rgb(125, 51, 194);
+    border-bottom: 5px solid rgb(125, 51, 194);
+    text-transform: uppercase;
+    font-weight: 600;
   }
   
-  /* .active-tabs::before {
+   /* .active-tabs::before {
     content: "";
     display: block;
     position: absolute;
@@ -308,20 +318,22 @@ body,input{
     width: calc(100% + 2px);
     height: 5px;
     background: rgb(88, 147, 241);
-  } */
+  }  */
   
   
   
   button {
-    border: none;
-    
+    border: none;  
   }
+
   .content-tabs {
     flex-grow : 1;
   }
+  
   .content {
     background: white;
-    padding: 20px;
+    margin-top: 40px;
+    padding: 30px;
     width: 100%;
     height: 100%;
     display: none;
@@ -344,6 +356,7 @@ body,input{
   }
 
 
+/* modal styling only*/
 
   .modal{
     display: block;
@@ -372,7 +385,6 @@ body,input{
     margin-right: 10px;
     font-size: 14px;
     text-transform: uppercase;
-    /* background-color: rgb(180, 58, 204); */
     background-color:rgb(125, 51, 194);
     border-radius: 50px;
     width: 30%;    

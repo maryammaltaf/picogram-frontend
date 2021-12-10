@@ -22,7 +22,7 @@ function App() {
             {
               localStorage.getItem('token')
                 ?
-                <Profile setLoginUser={setLoginUser} user={user} />
+                <List setLoginUser={setLoginUser} user={user} />
                 :
                 <Login setLoginUser={setLoginUser} />
             }

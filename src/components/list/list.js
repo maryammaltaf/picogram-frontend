@@ -191,6 +191,7 @@ const List = ({ setLoginUser, user }) => {
                     </div>
 
                     <div className="part2">
+                        
                         <div className="bloc-tabs">
                             <button
                                 className={toggleState === 1 ? "tabs active-tabs" : "tabs"}
@@ -238,6 +239,8 @@ const List = ({ setLoginUser, user }) => {
                             </div>
                         </div>
                     </div>
+
+                    
                     <div className="part3">
                         <input type="search" placeholder="Search" className="search" />
                         <div className="suggested">
