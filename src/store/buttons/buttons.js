@@ -78,8 +78,6 @@ function button(state = defaultButton, action){
     
 }
 
-const buttonApp = combineReducers({
-    button
-});
 
-export default buttonApp;
+
+export default button;

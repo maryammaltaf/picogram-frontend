@@ -8,6 +8,7 @@ import photo from './profilepic.jpeg'
 import { useDispatch } from "react-redux";
 import { useSelector } from "react-redux";
 import { followPerson, followingPerson, requestPerson, editProfile } from '../../store/buttons/buttons'
+import { setFollowerCount , setFollowingCount } from "../../store/follow-count/follow-count";
 import { Router, Route } from "react-router";
 import Modal from 'react-modal';
 
@@ -16,6 +17,10 @@ const url = 'http://localhost:9000';
 
 const Profile = ({ setLoginUser, user }) => {
     const button = useSelector(state => state.button)
+
+    const count = useSelector(state => state.count)
+
+    
 
     const dispatch = useDispatch();
 
@@ -32,6 +37,10 @@ const Profile = ({ setLoginUser, user }) => {
 
     console.log("USER: ", user)
 
+    //dispatch(setFollowerCount(user.followersCount));
+    // console.log("im here")
+    // dispatch(setFollowingCount(user.followingCount));
+
     console.log("length", Object.entries(user).length)
     if (Object.entries(user).length !== 0) {
         console.log("User hai", user)
@@ -41,7 +50,7 @@ const Profile = ({ setLoginUser, user }) => {
     }
 
     const clickUser = (e) => {
-
+       
 
         // console.log(e.target.innerHTML);
         const tempClickedUser = getUsernameText(e);
@@ -52,6 +61,9 @@ const Profile = ({ setLoginUser, user }) => {
                 setClickUser(res.data.userObj)
                 console.log("click1: ", res.data.userObj)
                 console.log("click2: ", clickedUser);
+                dispatch(setFollowerCount(res.data.userObj.followersCount));
+                console.log("im here")
+                dispatch(setFollowingCount(res.data.userObj.followingCount));
                 if (res.data.userObj.followStatus == -1) {
                     dispatch(followPerson('Follow'));
                     setSetting('Message')
@@ -63,6 +75,7 @@ const Profile = ({ setLoginUser, user }) => {
                 if (res.data.userObj.followStatus == 1) {
                     dispatch(followingPerson('Following'));
                     setSetting('Message')
+                   
                 }
                 if (res.data.userObj.followStatus == 0) {
                     dispatch(editProfile('Edit Profile'));
@@ -131,13 +144,17 @@ const Profile = ({ setLoginUser, user }) => {
             console.log("agaye idhar", username)
             axios.post(`${url}/send-request`, null, { params: { username } })
                 .then(res => {
-                    console.log(res.data)
+                    console.log("followers right now", res.data.followersCount)
+                    dispatch(setFollowerCount(res.data.followersCount));
                 })
                 .catch(err => {
                     console.log("err: ", err.response)
                 })
-
-            dispatch(followingPerson('Following'))
+            
+            
+            
+            dispatch(followingPerson('Following'));
+            
         }
     }
 
@@ -148,9 +165,11 @@ const Profile = ({ setLoginUser, user }) => {
             axios.delete(`${url}/unfollow`, { params: { username } })
                 .then(res => {
                     console.log(res.data)
+                    dispatch(setFollowerCount(res.data.followersCount));
                 })
             setModalIsOpen(modalIsOpen)
             dispatch(followPerson('Follow'));
+           
 
 
         }
@@ -209,8 +228,8 @@ const Profile = ({ setLoginUser, user }) => {
                                     <p className="pText">-- posts</p>
                                     {/* <p className = "pText">-- followers</p> */}
                                     {console.log("ClickedUser: ", clickedUser)}
-                                    <p className="pText">{clickedUser.followersCount} followers</p>
-                                    <p className="pText"> {clickedUser.followingCount} following</p>
+                                    <p className="pText">{count.followerCount} followers</p>
+                                    <p className="pText"> {count.followingCount} following</p>
                                 </div>
 
                                 {console.log("first stop", modalIsOpen)}

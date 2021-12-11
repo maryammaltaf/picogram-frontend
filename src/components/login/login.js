@@ -8,6 +8,9 @@ import { FaUserAlt, FaKey, FaFacebookF, FaTwitter, FaLinkedinIn, FaGoogle } from
 import logo from './picogramlogo.png'
 import bg from './bg2.png'
 import vector from './vector.png'
+import { setFollowerCount , setFollowingCount } from "../../store/follow-count/follow-count";
+import { useDispatch } from "react-redux";
+
 
 const Login = ({ setLoginUser }) => {
     console.log("token: ", localStorage.getItem("token"))
@@ -15,6 +18,10 @@ const Login = ({ setLoginUser }) => {
         username: "",
         password: "",
     })
+
+    
+
+    const dispatch = useDispatch();
 
     const history = useHistory()
     
@@ -45,6 +52,8 @@ const Login = ({ setLoginUser }) => {
                 .then(res => {
                     console.log("resData", res.data)
                     console.log("userObj", res.data.userObj)
+                    dispatch(setFollowerCount(res.data.userObj.followersCount))
+                    dispatch(setFollowingCount(res.data.userObj.followingCount))
                     setLoginUser(res.data.userObj)
                     history.push("/")
                 })
@@ -56,6 +65,12 @@ const Login = ({ setLoginUser }) => {
                 console.log("BACKEND ERR:", err.response)
             })
     }
+
+    
+        
+
+
+    
 
     return (
         
@@ -88,7 +103,7 @@ const Login = ({ setLoginUser }) => {
                             <input type="password" name="password" value={user.password} onChange={handleChange} placeholder="Password"></input>
                         </div>
                         
-                        <input className="button"type="submit" value="Login" class="btn solid"/>
+                        <input className="button"type="submit" value="Login" class="btn solid" />
                         {/* <div className="button" class="btn solid" onClick={login}>LOGIN</div> */}
 
                         <p class="social-text"> Or sign in with social platforms</p>
