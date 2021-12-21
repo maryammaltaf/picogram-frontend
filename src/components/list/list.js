@@ -13,7 +13,9 @@ import Modal from 'react-modal';
 
 
 const url = 'http://localhost:9000';
-const List = ({ setLoginUser, user }) => {
+const List = ({ setLoginUser, user, a }) => {
+    
+   
     const button = useSelector(state => state.button)
 
     const dispatch = useDispatch();
@@ -39,6 +41,8 @@ const List = ({ setLoginUser, user }) => {
             setToggleState(index);
         };
 
+      
+
 
         const clearAndGetList = (listName) => {
             if (listName !== 'followers' && listName !== 'following' && listName !== 'requests') {
@@ -49,7 +53,11 @@ const List = ({ setLoginUser, user }) => {
             while(div.firstChild) {
                 div.removeChild(div.firstChild);
             }
-            axios.get('http://localhost:9000/' + listName)
+            const path = window.location.pathname;
+            console.log("path",path);
+            const username = path.slice(6);
+            console.log("asdfgh", username);
+            axios.get('http://localhost:9000/' + listName,   { params: { username } })
             .then(res => {
                 console.log(res.data);
                     const list = document.createElement('ul');
@@ -66,6 +74,11 @@ const List = ({ setLoginUser, user }) => {
             });
 
 
+        }
+
+        if (a){
+            toggleTab(1)
+            a = false
         }
 
         let [clickedUser, setClickUser] = useState({

@@ -17,6 +17,9 @@ import List from "../list/list";
 const url = 'http://localhost:9000';
 
 const Profile = ({ setLoginUser, user }) => {
+
+    
+
     const button = useSelector(state => state.button)
 
     const count = useSelector(state => state.count)
@@ -84,6 +87,7 @@ const Profile = ({ setLoginUser, user }) => {
                     dispatch(editProfile('Edit Profile'));
                     setSetting('Settings')
                 }
+                history.push(`/profile/${tempClickedUser}`)
 
 
             })
@@ -183,7 +187,11 @@ const Profile = ({ setLoginUser, user }) => {
         }
     }
     const goToList = () => {
-        history.push("/list")
+        const path = window.location.pathname;
+        console.log("path",path);
+        const username = path.slice(9);
+        console.log("asdfgh", username);
+        history.push(`/list/${username}`)
         
     }
 
