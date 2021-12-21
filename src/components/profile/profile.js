@@ -8,9 +8,10 @@ import photo from './profilepic.jpeg'
 import { useDispatch } from "react-redux";
 import { useSelector } from "react-redux";
 import { followPerson, followingPerson, requestPerson, editProfile } from '../../store/buttons/buttons'
-import { setFollowerCount , setFollowingCount } from "../../store/follow-count/follow-count";
+import { setFollowerCount, setFollowingCount } from "../../store/follow-count/follow-count";
 import { Router, Route } from "react-router";
 import Modal from 'react-modal';
+import List from "../list/list";
 
 
 const url = 'http://localhost:9000';
@@ -20,13 +21,15 @@ const Profile = ({ setLoginUser, user }) => {
 
     const count = useSelector(state => state.count)
 
-    
+
 
     const dispatch = useDispatch();
 
     const history = useHistory();
 
     const [modalIsOpen, setModalIsOpen] = useState(false);
+
+    const [editModalIsOpen, setEditModalIsOpen] = useState(false);
 
     let [clickedUser, setClickUser] = useState({
     })
@@ -50,7 +53,7 @@ const Profile = ({ setLoginUser, user }) => {
     }
 
     const clickUser = (e) => {
-       
+
 
         // console.log(e.target.innerHTML);
         const tempClickedUser = getUsernameText(e);
@@ -75,7 +78,7 @@ const Profile = ({ setLoginUser, user }) => {
                 if (res.data.userObj.followStatus == 1) {
                     dispatch(followingPerson('Following'));
                     setSetting('Message')
-                   
+
                 }
                 if (res.data.userObj.followStatus == 0) {
                     dispatch(editProfile('Edit Profile'));
@@ -119,10 +122,15 @@ const Profile = ({ setLoginUser, user }) => {
         clickedUser = JSON.parse(localStorage.getItem("user"))
     }
 
-    const shouldOpenModal = () => {
+    const shouldOpenModal = (e) => {
+        e.preventDefault()
         if (button.name == "Following") {
             setModalIsOpen(!modalIsOpen)
         }
+        if (button.name == "Edit Profile") {
+            setEditModalIsOpen(!editModalIsOpen)
+        }
+
         if ((button.name == "Follow") && (clickedUser.privacy == true)) {
             axios.defaults.headers.common["x-access-token"] = localStorage.getItem("token");
             const username = clickedUser.username
@@ -150,11 +158,11 @@ const Profile = ({ setLoginUser, user }) => {
                 .catch(err => {
                     console.log("err: ", err.response)
                 })
-            
-            
-            
+
+
+
             dispatch(followingPerson('Following'));
-            
+
         }
     }
 
@@ -169,10 +177,13 @@ const Profile = ({ setLoginUser, user }) => {
                 })
             setModalIsOpen(modalIsOpen)
             dispatch(followPerson('Follow'));
-           
+
 
 
         }
+    }
+    const goToList = () => {
+        <List/>
     }
 
 
@@ -228,7 +239,7 @@ const Profile = ({ setLoginUser, user }) => {
                                     <p className="pText">-- posts</p>
                                     {/* <p className = "pText">-- followers</p> */}
                                     {console.log("ClickedUser: ", clickedUser)}
-                                    <p className="pText">{count.followerCount} followers</p>
+                                    <button className="pText" onClick={goToList}>{count.followerCount} followers</button>
                                     <p className="pText"> {count.followingCount} following</p>
                                 </div>
 
@@ -242,15 +253,37 @@ const Profile = ({ setLoginUser, user }) => {
                                         style={{ backgroundColor: "rgb(125, 51, 194)", border: "2px solid rgb(125, 51, 194) ", color: "#fff", marginLeft: "17px", width: "285px" }}>
                                         {button.name}
 
-                                            <Modal isOpen={modalIsOpen} className="modal">
-                                                {console.log("sec stop", modalIsOpen)}
-                                                <h2 className='modal-text'>Are you sure you want to unfollow this person?</h2>
-                                                {/* <button onClick={ () => setModalIsOpen(modalIsOpen)}>no</button> */}
-                                                <button className='modal-btn1' onClick={unfollowChange} >yes</button>
-                                                <button className='modal-btn2'> no </button>
-                                                {console.log("third stop", modalIsOpen)}
-                                            </Modal>
-                                        
+                                        <Modal isOpen={modalIsOpen} className="modal1">
+                                            {console.log("sec stop", modalIsOpen)}
+                                            <h2 className='modal-text'>Are you sure you want to unfollow this person?</h2>
+                                            {/* <button onClick={ () => setModalIsOpen(modalIsOpen)}>no</button> */}
+                                            <button className='modal-btn1' onClick={unfollowChange} >yes</button>
+                                            <button className='modal-btn2'> no </button>
+                                            {console.log("third stop", modalIsOpen)}
+                                        </Modal>
+
+                                        <Modal isOpen={editModalIsOpen} className="modal2">
+                                            {console.log("sec stop", editModalIsOpen)}
+                                            <div className='modal-all'>
+                                                <div className='modal-field'>
+                                                    <h2 className='modal-text-field'>Name: </h2>
+                                                    <input type="text" className="modal-input" placeholder={JSON.parse(localStorage.getItem("user")).fullname} ></input>
+                                                </div>
+                                                <div className='modal-field'>
+                                                    <h2 className='modal-text-field'>Bio: </h2>
+                                                    <input type="text" className="modal-input" placeholder={JSON.parse(localStorage.getItem("user")).bio}></input>
+                                                </div>
+                                                <div className='modal-field'>
+                                                    <h2 className='modal-text-field'>Privacy: </h2>
+                                                    <input type="text" className="modal-input" placeholder={JSON.parse(localStorage.getItem("user")).privacy ? "true" : "false"}></input>
+                                                </div>
+                                            </div>
+
+                                            <button className="modal-btn3"> Save</button>
+                                            <button className="modal-btn4" onClick = {() =>setEditModalIsOpen(editModalIsOpen)}> Cancel</button>
+
+                                            {console.log("third stop", editModalIsOpen)}
+                                        </Modal>
 
 
                                     </button>
@@ -266,8 +299,8 @@ const Profile = ({ setLoginUser, user }) => {
 
                         </div>
                         <div className="nameBio">
-                            <h2 className="text2">Full name</h2>
-                            <p>bio.............</p>
+                            <h2 className="text2"> {clickedUser.fullname}</h2>
+                            <p>{clickedUser.bio}</p>
                         </div>
                     </div>
                     <div className="allPosts">

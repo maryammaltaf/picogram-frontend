@@ -358,7 +358,7 @@ body,input{
 
 /* modal styling only*/
 
-  .modal{
+  .modal1{
     display: block;
     background-color: #f0f0f0;
     height: 30%;
@@ -369,6 +369,21 @@ body,input{
     top: 50%;
     left: 50%;
     transform: translate(150%,  100%);
+    border-radius: 50px;
+    box-shadow: 7px 7px 10px rgba(0, 0, 0, 0.315)
+  }
+
+  .modal2{
+    display: block;
+    background-color: #f0f0f0;
+    height: 40%;
+    width: 25%;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    top: 50%;
+    left: 50%;
+    transform: translate(150%,  60%);
     border-radius: 50px;
     box-shadow: 7px 7px 10px rgba(0, 0, 0, 0.315)
   }
@@ -412,6 +427,68 @@ body,input{
 }
 .modal-btn2:hover{
   background-color: rgb(44, 44, 44);
+}
+
+.modal-btn3{
+  padding: 10px;
+  margin-left: 10px;
+  margin-right: 10px;
+  margin-top: 20px;
+  font-size: 14px;
+  text-transform: uppercase;
+  background-color:rgb(125, 51, 194);
+  border-radius: 50px;
+  width: 30%;    
+  font-weight: 600;
+  color: #fff;
+  cursor: pointer;
+}
+
+.modal-btn3:hover{
+background-color: rgb(180, 58, 204);
+}
+
+.modal-btn4{
+  padding: 10px;
+  margin-left: 10px;
+  margin-right: 10px;
+  margin-top: 20px;
+  font-size: 14px;
+  text-transform: uppercase;
+  background-color: rgb(0, 0, 0);
+  border-radius: 50px;
+  width: 30%;    
+  font-weight: 600;
+  color: #fff;
+  cursor: pointer;
+}
+.modal-btn4:hover{
+  background-color: rgb(44, 44, 44);
+}
+
+.modal-all{
+  padding-top: 30px;
+  flex-direction: column;
+}
+
+.modal-field{
+  display: flex;
+  margin: 30px;
+  justify-content: center;
+}
+
+.modal-text-field{
+  text-align: left;
+}
+
+.modal-input{
+  display: flex;
+  justify-content: left;
+  background-color: #fff;
+  border-radius: 50px;
+  border: 0px solid rgb(255, 255, 255);
+  margin-left: 30px;
+  align-items: center;
 }
 
 

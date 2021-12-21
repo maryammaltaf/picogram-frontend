@@ -18,8 +18,9 @@ export function setFollowingCount(count){
 }
 
 const defaultCount = {
-    followerCount : JSON.parse(localStorage.getItem("user")).followersCount,
-    followingCount : JSON.parse(localStorage.getItem("user")).followingCount,
+    followerCount: 0, followingCount: 0
+    // followerCount : JSON.parse(localStorage.getItem("user")).followersCount,
+    // followingCount : JSON.parse(localStorage.getItem("user")).followingCount,
 }
 
 

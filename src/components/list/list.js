@@ -76,14 +76,22 @@ const List = ({ setLoginUser, user }) => {
         // setClickUser(user)
 
         console.log("USER: ", user)
-
-        console.log("length", Object.entries(user).length)
-        if (Object.entries(user).length !== 0) {
+        if(!user){
             console.log("User hai", user)
             localStorage.setItem("user", JSON.stringify(user))
             // localStorage.setItem("clicked", JSON.stringify(user))
             // setClickUser(user)
         }
+
+
+        //console.log("length", Object.entries(user).length)
+        else if (Object.entries(user).length !== 0) {
+            console.log("User hai", user)
+            localStorage.setItem("user", JSON.stringify(user))
+            // localStorage.setItem("clicked", JSON.stringify(user))
+            // setClickUser(user)
+        }
+
 
         const clickUser = (e) => {
 
