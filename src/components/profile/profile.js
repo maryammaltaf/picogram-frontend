@@ -183,7 +183,8 @@ const Profile = ({ setLoginUser, user }) => {
         }
     }
     const goToList = () => {
-        <List/>
+        history.push("/list")
+        
     }
 
 

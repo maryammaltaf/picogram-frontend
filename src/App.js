@@ -29,10 +29,10 @@ function App() {
             }
           </Route>
           <Route path="/list">
-            <List />
+            <List setLoginUser={setLoginUser} user={user}/>
           </Route>
           <Route path="/getProfile">
-            <Profile />
+            <Profile setLoginUser={setLoginUser} user={user} />
           </Route>
           <Route path="/login">
             <Login setLoginUser={setLoginUser} />
