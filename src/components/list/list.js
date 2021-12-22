@@ -1,4 +1,4 @@
-import React, { useState, useCallback } from "react"
+import React, { useState, useCallback, useEffect, useRef, useLayoutEffect } from "react"
 import "../profile/profile.css"
 import axios from "axios"
 import { useHistory } from "react-router-dom"
@@ -14,8 +14,15 @@ import Modal from 'react-modal';
 
 const url = 'http://localhost:9000';
 const List = ({ setLoginUser, user, a }) => {
-    
-   
+
+    const firstUpdate = useRef(true);
+    useLayoutEffect(() => {
+    if (firstUpdate.current) {
+        toggleTab(1);
+        firstUpdate.current = false;
+        return;
+    }
+    });
     const button = useSelector(state => state.button)
 
     const dispatch = useDispatch();
@@ -50,9 +57,17 @@ const List = ({ setLoginUser, user, a }) => {
                 return;
             }
             let div = document.getElementById('div-' + listName);
+            // let div2 = document.getElementById('div-' + "following");
+            // let div3 = document.getElementById('div-' + "requests");
             while(div.firstChild) {
                 div.removeChild(div.firstChild);
             }
+            // while(div2.firstChild) {
+            //     div2.removeChild(div.firstChild);
+            // }
+            // while(div3.firstChild) {
+            //     div3.removeChild(div.firstChild);
+            // }
             const path = window.location.pathname;
             console.log("path",path);
             const username = path.slice(6);
@@ -74,11 +89,6 @@ const List = ({ setLoginUser, user, a }) => {
             });
 
 
-        }
-
-        if (a){
-            toggleTab(1)
-            a = false
         }
 
         let [clickedUser, setClickUser] = useState({
