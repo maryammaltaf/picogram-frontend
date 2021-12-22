@@ -125,40 +125,68 @@ const Homepage = ({ setLoginUser, user }) => {
     }
 
 
-    const allPosts = () => {
+    const getLikes = (post) => {
+        axios.defaults.headers.common["x-access-token"] = localStorage.getItem("token");
+        axios.get('http://localhost:9000/getLikes', { params: { post } })
+        .then(res => {
+            console.log(res.data.likesCount)
+            return (res.data.likesCount)
+
+        }).catch(err => {
+            console.log(err)
+        })
+    }
+
+
+    const allPosts = async () => {
+        const containerDiv = document.getElementsByClassName('posts-container') [0]
+        axios.defaults.headers.common["x-access-token"] = localStorage.getItem("token");
+        axios.get('http://localhost:9000/home')
+        .then(res => {
+            console.log(res.data);
+            for (let i = 0; i < res.data.posts.length; i++) {
+                const singlePost = `
+                <div class="post">
+                                    <div class="poster-details">
+                                        <img src=${photo} class="post-profilepic" />
+                                        <p class="poster-name">${res.data.posts[i].poster}</p>
+                                    </div>
+                                    <img src=${res.data.posts[i].url} class="post-picture" />
+                                    <div class="post-icons">
+                                        <p class="icon-button">${res.data.likesArray[i]} likes </p>
+                                        <div class="button-display">
+                                            <button class="icon-button">
+                                                <IoHeartOutline size=${30}></IoHeartOutline>
+                                            </button>
+                                            <button class="icon-button">
+                                                <IoChatbubbleEllipsesOutline size=${30} ></IoChatbubbleEllipsesOutline>
+                                            </button>
+                                        </div>
+                                    </div>
+                                    <div class="post-caption">
+                                        <p class="caption-username">username</p>
+                                        <p class="caption-caption">${res.data.posts[i].caption}</p>
+                                    </div>
+                                </div>`
+                            
+                               
+                                console.log("a", containerDiv)
+                                containerDiv.insertAdjacentHTML('beforeend', singlePost)
+            }
+        }).catch(err => {
+            console.log("err: ", err.response)
+        })
+
+        
 
         console.log("nahi chal raha")
-        const containerDiv = document.getElementsByClassName('posts-container') [0]
-        console.log("a", containerDiv)
+       
         let photo2 = "https://res.cloudinary.com/dbxbroqqm/image/upload/v1640124567/halcdizvhi46lmbxr66c.png"
         
-        for (let i = 0; i < 10; i++) {
-            const singlePost = `
-            <div class="post">
-                                <div class="poster-details">
-                                    <img src=${photo2} class="post-profilepic" />
-                                    <p class="poster-name">username</p>
-                                </div>
-                                <img src=${photo2} class="post-picture" />
-                                <div class="post-icons">
-                                    <p class="icon-button">069 poeple like this post</p>
-                                    <div class="button-display">
-                                        <button class="icon-button">
-                                            <IoHeartOutline size=${30}></IoHeartOutline>
-                                        </button>
-                                        <button class="icon-button">
-                                            <IoChatbubbleEllipsesOutline size=${30} ></IoChatbubbleEllipsesOutline>
-                                        </button>
-                                    </div>
-                                </div>
-                                <div class="post-caption">
-                                    <p class="caption-username">username</p>
-                                    <p class="caption-caption">caption blah blah blah</p>
-                                </div>
-                            </div>`
+        
                        
-                           containerDiv.insertAdjacentHTML('beforeend', singlePost)
-        }
+                           
+        
     }
 
     return (
