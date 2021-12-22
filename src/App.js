@@ -28,6 +28,9 @@ function App() {
                 <Login setLoginUser={setLoginUser} />
             }
           </Route>
+          <Route path="/home">
+            <Homepage setLoginUser={setLoginUser} user={user}/>
+          </Route>
           <Route path="/list">
             <List setLoginUser={setLoginUser} user={user}/>
           </Route>

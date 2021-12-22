@@ -491,6 +491,90 @@ background-color: rgb(180, 58, 204);
   align-items: center;
 }
 
+/* homepage mid part css */
+
+.posts-container{
+ 
+
+}
+
+.post{
+  margin: 20px;
+  padding: 20px;
+  border: 2px solid #000;
+  
+}
+
+.poster-details{
+  display: flex;
+  flex-direction: row;
+  background-color: #f0f0f0;
+  height: 65px;
+  align-items: center;
+  /* border-bottom: 2px solid #222; */
+}
+
+.poster-name{
+  margin: 12px;
+  margin-left: 20px;
+  font-size: 1.1rem;
+  font-weight: 600;
+}
+
+
+.post-profilepic{
+  margin-left: 10px;
+  height: 55px;
+  width: 55px;
+  border-radius: 50%;
+  border: 3px solid rgb(125, 51, 194);
+}
+
+.post-picture{
+  display: flex;
+  margin-top: 10px;
+  width: 1003.43px;
+  height: 1003.43px;
+}
+
+.post-icons{
+  background-color: #f0f0f0;
+  display: flex;
+  margin-top: 10px;
+}
+
+.icon-button{
+  display: flex;
+  flex-direction: row;
+  width: auto;
+  align-items: center;
+  border: none;
+  outline: none; 
+  cursor: pointer;
+  border-radius: 50px;
+  height: 60px;
+  padding: 15px;  
+  font-size: 1.1rem;  
+}
+
+.button-display{
+  margin-left: 620px;
+  display: flex;
+}
+
+.post-caption{
+  display: flex;
+  margin: 12px;
+  font-size: 1.1rem;
+}
+
+.caption-username{
+  font-weight: 600;
+  margin-right: 10px;
+}
+
+
+
 
 
 
