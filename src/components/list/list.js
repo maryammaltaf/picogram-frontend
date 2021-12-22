@@ -1,5 +1,5 @@
 import React, { useState, useCallback, useEffect, useRef, useLayoutEffect } from "react"
-import "../profile/profile.css"
+
 import axios from "axios"
 import { useHistory } from "react-router-dom"
 import { IoHomeOutline, IoCompassOutline, IoChatbubbleEllipsesOutline, IoHeartOutline, IoSettingsOutline } from "react-icons/all";
@@ -10,7 +10,7 @@ import { useSelector } from "react-redux";
 import { followPerson, followingPerson, requestPerson, editProfile } from '../../store/buttons/buttons'
 import { Router, Route } from "react-router";
 import Modal from 'react-modal';
-
+import "../list/list.css"
 
 const url = 'http://localhost:9000';
 const List = ({ setLoginUser, user, a }) => {
@@ -59,6 +59,7 @@ const List = ({ setLoginUser, user, a }) => {
 
 
         const getRequestsList = (mode) => {
+
             let div = document.getElementById('div-requests');
             while(div.firstChild) {
                 div.removeChild(div.firstChild);
@@ -79,9 +80,42 @@ const List = ({ setLoginUser, user, a }) => {
                 const list = document.createElement('ul');
                 for (let person of res.data["requests"]) {
                     console.log('person', person);
+                    let divCon = document.createElement('div')
+                    divCon.className = "listItem"
                     let item = document.createElement('li');
+
+                    let accButton = document.createElement("BUTTON");
+                    accButton.className = "button"
+                    accButton.addEventListener('click', () => accRequest(person.user._id, accButton, rejButton, accButton2))
+
+                    let accButton2 = document.createElement("BUTTON");
+                    accButton2.innerHTML = "Accepted"
+                    accButton2.className = "button2"
+                    accButton2.style.visibility = "hidden"
+
+                    let rejButton = document.createElement('BUTTON');
+                    rejButton.className = "button"
+                    rejButton.addEventListener('click', () => rejRequest(person.user._id, accButton, rejButton, rejButton2))
+
+                    let rejButton2 = document.createElement("BUTTON");
+                    rejButton2.innerHTML = "Rejected"
+                    rejButton2.className = "button2"
+                    rejButton2.style.visibility = "hidden"
+                    
+                  
                     item.innerHTML = person.user._id;
-                    list.appendChild(item);
+                    accButton.innerHTML = "Accept"
+                    rejButton.innerHTML = "Reject"
+                    divCon.appendChild(item)
+                    divCon.appendChild(accButton)
+                    divCon.appendChild(rejButton)
+                    divCon.appendChild(accButton2)
+                    divCon.appendChild(rejButton2)
+                    
+                    console.log("accept", accButton)
+                   
+                    
+                    list.appendChild(divCon);
                 }
                 div.appendChild(list);
             })
@@ -90,6 +124,41 @@ const List = ({ setLoginUser, user, a }) => {
             });
 
         }
+
+        const accRequest = (username , accButton, rejButton, accButton2) => {
+            console.log("in the onClick")
+            
+            axios.post('http://localhost:9000/accept-request', null,  { params: { username } })
+            .then(res => {
+                console.log(res.data)
+                accButton.style.visibility = "hidden"
+                rejButton.style.visibility = "hidden"
+                accButton2.style.visibility = "visible"
+            
+                
+
+            }).catch(err => {
+                console.log("err: ", err.response)
+            })
+        }
+
+        const rejRequest = (username , accButton, rejButton, rejButton2) => {
+            console.log("in the onClick")
+            
+            axios.delete('http://localhost:9000/reject-request',  { params: { username } })
+            .then(res => {
+                console.log(res.data)
+                accButton.style.visibility = "hidden"
+                rejButton.style.visibility = "hidden"
+                rejButton2.style.visibility = "visible"
+               
+                
+            }).catch(err => {
+                console.log("err: ", err.response)
+            })
+        }
+
+        
 
         const clearAndGetList = (listName) => {
             if (listName !== 'followers' && listName !== 'following') {
@@ -111,6 +180,7 @@ const List = ({ setLoginUser, user, a }) => {
                 for (let person of res.data[listName]) {
                     console.log('person', person);
                     let item = document.createElement('li');
+                   
                     item.innerHTML = person.user._id;
                     list.appendChild(item);
                 }

@@ -130,16 +130,16 @@ const Homepage = ({ setLoginUser, user }) => {
         console.log("nahi chal raha")
         const containerDiv = document.getElementsByClassName('posts-container') [0]
         console.log("a", containerDiv)
-
+        let photo2 = "https://res.cloudinary.com/dbxbroqqm/image/upload/v1640124567/halcdizvhi46lmbxr66c.png"
         
         for (let i = 0; i < 10; i++) {
             const singlePost = `
             <div class="post">
                                 <div class="poster-details">
-                                    <img src=${photo} class="post-profilepic" />
+                                    <img src=${photo2} class="post-profilepic" />
                                     <p class="poster-name">username</p>
                                 </div>
-                                <img src=${photo} class="post-picture" />
+                                <img src=${photo2} class="post-picture" />
                                 <div class="post-icons">
                                     <p class="icon-button">069 poeple like this post</p>
                                     <div class="button-display">
