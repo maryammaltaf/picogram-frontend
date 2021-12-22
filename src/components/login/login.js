@@ -55,7 +55,7 @@ const Login = ({ setLoginUser }) => {
                     dispatch(setFollowerCount(res.data.userObj.followersCount))
                     dispatch(setFollowingCount(res.data.userObj.followingCount))
                     setLoginUser(res.data.userObj)
-                    history.push("/")
+                    history.push(`/profile/${res.data.userObj.username}`)
                 })
                 .catch(err => {
                     console.log("BACKEND ERR:", err.response)

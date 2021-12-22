@@ -1,4 +1,4 @@
-import React, { useState, useCallback } from "react"
+import React, { useState, useCallback, useEffect, useRef, useLayoutEffect } from "react"
 import "../profile/profile.css"
 import axios from "axios"
 import { useHistory } from "react-router-dom"
@@ -13,7 +13,16 @@ import Modal from 'react-modal';
 
 
 const url = 'http://localhost:9000';
-const List = ({ setLoginUser, user }) => {
+const List = ({ setLoginUser, user, a }) => {
+
+    const firstUpdate = useRef(true);
+    useLayoutEffect(() => {
+    if (firstUpdate.current) {
+        toggleTab(1);
+        firstUpdate.current = false;
+        return;
+    }
+    });
     const button = useSelector(state => state.button)
 
     const dispatch = useDispatch();
@@ -34,14 +43,56 @@ const List = ({ setLoginUser, user }) => {
                 clearAndGetList('following');
             }
             else if (index === 3) {
-                clearAndGetList('requests');
+                const path = window.location.pathname;
+                console.log("path",path);
+                const username = path.slice(6);
+                console.log("asdfgh", username);
+                if (username !== JSON.parse(localStorage.getItem("user")).username) {
+                    getRequestsList(0);
+                }
+                else {
+                    getRequestsList(1)
+                }
             }
             setToggleState(index);
         };
 
 
+        const getRequestsList = (mode) => {
+            let div = document.getElementById('div-requests');
+            while(div.firstChild) {
+                div.removeChild(div.firstChild);
+            }
+
+            if (mode === 0) {
+                let textP = document.createElement('p');
+                const node = document.createTextNode("You cant see someone else's requests.");
+                textP.appendChild(node);
+                div.appendChild(textP);
+                console.log("MODE  IS 0")
+                return;
+            }
+
+            axios.get('http://localhost:9000/requests')
+            .then(res => {
+                console.log(res.data);
+                const list = document.createElement('ul');
+                for (let person of res.data["requests"]) {
+                    console.log('person', person);
+                    let item = document.createElement('li');
+                    item.innerHTML = person.user._id;
+                    list.appendChild(item);
+                }
+                div.appendChild(list);
+            })
+            .catch(err => {
+                console.log(err);
+            });
+
+        }
+
         const clearAndGetList = (listName) => {
-            if (listName !== 'followers' && listName !== 'following' && listName !== 'requests') {
+            if (listName !== 'followers' && listName !== 'following') {
                 console.log("Invalid list name");
                 return;
             }
@@ -49,17 +100,21 @@ const List = ({ setLoginUser, user }) => {
             while(div.firstChild) {
                 div.removeChild(div.firstChild);
             }
-            axios.get('http://localhost:9000/' + listName)
+            const path = window.location.pathname;
+            console.log("path",path);
+            const username = path.slice(6);
+            console.log("asdfgh", username);
+            axios.get('http://localhost:9000/' + listName,   { params: { username } })
             .then(res => {
                 console.log(res.data);
-                    const list = document.createElement('ul');
-                    for (let person of res.data[listName]) {
-                        console.log('person', person);
-                        let item = document.createElement('li');
-                        item.innerHTML = person.user._id;
-                        list.appendChild(item);
-                    }
-                    div.appendChild(list);
+                const list = document.createElement('ul');
+                for (let person of res.data[listName]) {
+                    console.log('person', person);
+                    let item = document.createElement('li');
+                    item.innerHTML = person.user._id;
+                    list.appendChild(item);
+                }
+                div.appendChild(list);
             })
             .catch(err => {
                 console.log(err);

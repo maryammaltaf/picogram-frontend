@@ -32,9 +32,9 @@ function App() {
             <Homepage setLoginUser={setLoginUser} user={user}/>
           </Route>
           <Route path="/list">
-            <List setLoginUser={setLoginUser} user={user}/>
+            <List setLoginUser={setLoginUser} user={user} a = {true}/>
           </Route>
-          <Route path="/getProfile">
+          <Route path="/profile">
             <Profile setLoginUser={setLoginUser} user={user} />
           </Route>
           <Route path="/login">
