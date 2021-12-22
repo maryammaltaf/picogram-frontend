@@ -43,31 +43,63 @@ const List = ({ setLoginUser, user, a }) => {
                 clearAndGetList('following');
             }
             else if (index === 3) {
-                clearAndGetList('requests');
+                const path = window.location.pathname;
+                console.log("path",path);
+                const username = path.slice(6);
+                console.log("asdfgh", username);
+                if (username !== JSON.parse(localStorage.getItem("user")).username) {
+                    getRequestsList(0);
+                }
+                else {
+                    getRequestsList(1)
+                }
             }
             setToggleState(index);
         };
 
-      
 
+        const getRequestsList = (mode) => {
+            let div = document.getElementById('div-requests');
+            while(div.firstChild) {
+                div.removeChild(div.firstChild);
+            }
+
+            if (mode === 0) {
+                let textP = document.createElement('p');
+                const node = document.createTextNode("You cant see someone else's requests.");
+                textP.appendChild(node);
+                div.appendChild(textP);
+                console.log("MODE  IS 0")
+                return;
+            }
+
+            axios.get('http://localhost:9000/requests')
+            .then(res => {
+                console.log(res.data);
+                const list = document.createElement('ul');
+                for (let person of res.data["requests"]) {
+                    console.log('person', person);
+                    let item = document.createElement('li');
+                    item.innerHTML = person.user._id;
+                    list.appendChild(item);
+                }
+                div.appendChild(list);
+            })
+            .catch(err => {
+                console.log(err);
+            });
+
+        }
 
         const clearAndGetList = (listName) => {
-            if (listName !== 'followers' && listName !== 'following' && listName !== 'requests') {
+            if (listName !== 'followers' && listName !== 'following') {
                 console.log("Invalid list name");
                 return;
             }
             let div = document.getElementById('div-' + listName);
-            // let div2 = document.getElementById('div-' + "following");
-            // let div3 = document.getElementById('div-' + "requests");
             while(div.firstChild) {
                 div.removeChild(div.firstChild);
             }
-            // while(div2.firstChild) {
-            //     div2.removeChild(div.firstChild);
-            // }
-            // while(div3.firstChild) {
-            //     div3.removeChild(div.firstChild);
-            // }
             const path = window.location.pathname;
             console.log("path",path);
             const username = path.slice(6);
@@ -75,14 +107,14 @@ const List = ({ setLoginUser, user, a }) => {
             axios.get('http://localhost:9000/' + listName,   { params: { username } })
             .then(res => {
                 console.log(res.data);
-                    const list = document.createElement('ul');
-                    for (let person of res.data[listName]) {
-                        console.log('person', person);
-                        let item = document.createElement('li');
-                        item.innerHTML = person.user._id;
-                        list.appendChild(item);
-                    }
-                    div.appendChild(list);
+                const list = document.createElement('ul');
+                for (let person of res.data[listName]) {
+                    console.log('person', person);
+                    let item = document.createElement('li');
+                    item.innerHTML = person.user._id;
+                    list.appendChild(item);
+                }
+                div.appendChild(list);
             })
             .catch(err => {
                 console.log(err);
